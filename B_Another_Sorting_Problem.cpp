@@ -10,8 +10,7 @@ void solve()
     cin >> n;
 
     vector<int> v(n);
-    vector<int> min;
-    vector<int> max;
+    vector<int> points;
 
     for (int i = 0; i < n; i++)
     {
@@ -27,46 +26,46 @@ void solve()
                 cout << "NO" << '\n';
                 return;
             }
+            else if (i < n - 1 && v[i + 1] < v[i - 1])
+            {
+                points.push_back(i);
+                points.push_back(i + 1);
+            }
             else 
             {
-                min.push_back(v[i - 1] - v[i]);
-                if (i < n - 1) max.push_back(v[i + 1] - v[i]);
+                points.push_back(i);
             }
         }
     }
 
-    int m = min.size();
-    
+    int m = points.size();
+
     if (m == 0)
     {
         cout << "YES" << '\n';
         return;
     }
-
-    int maxofmin = min[0];
-    int minofmax = max[0];
     
     for (int i = 0; i < m; i++)
     {
-        if (min[i] > maxofmin)
+        int diff = v[points[i] - 1] - v[points[i]];
+
+        for (int j = 0; j < m; j++)
         {
-            maxofmin = min[i];
-        }
-        if (max[i] < minofmax)
-        {
-            minofmax = max[i];
+            if (diff > 0) v[points[j]] += diff;
         }
     }
 
-    if (maxofmin < minofmax)
+    for (int i = 0; i < m; i++)
     {
-        cout << "YES" << '\n';
+        if (v[points[i]] > v[points[i] + 1])
+        {
+            cout << "NO" << '\n';
+            return;
+        }
     }
-    else 
-    {
-        cout << "NO" << '\n';
-    }
-    return;
+
+    cout << "YES" << '\n';
 }
 
 signed main()
