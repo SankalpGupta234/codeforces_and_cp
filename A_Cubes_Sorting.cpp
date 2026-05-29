@@ -17,6 +17,8 @@ void solve()
         cin >> v[i];
     }
 
+    if (is_sorted(v.begin(), v.end(), [](int a, int b) {return a >= b;})) cout << "NO\n";
+    else cout << "YES\n";
 
     return;
 }

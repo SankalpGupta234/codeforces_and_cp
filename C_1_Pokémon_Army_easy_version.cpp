@@ -7,8 +7,8 @@ using namespace std;
 
 void solve()
 {
-    int n;
-    cin >> n;
+    int n, q;
+    cin >> n >> q;
 
     vector<int> v(n);
 
@@ -16,6 +16,18 @@ void solve()
     {
         cin >> v[i];
     }
+
+    int answer = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        signed curr = v[i];
+        signed next = (i == n - 1) ? 0 : v[i + 1];
+
+        answer += max(curr - next, 0);
+    }
+
+    cout << answer << '\n';
 
 
     return;
